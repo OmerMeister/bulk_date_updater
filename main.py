@@ -5,11 +5,12 @@ from colorama import Fore, Back, Style
 
 # auxilary functions
 
-
-def exif_date_changer(filename, year, month, day):
+# the function gets date and time parameters and create from them a datetime object
+# than, it replaces the value of 3 exif date related properties with the newly created object
+def exif_date_changer(filename, year, month, day,hour,minute,second):
     exif_dict = piexif.load(filename)
-    new_date = datetime(year, month, day, 13, 0,
-                        0).strftime("%Y:%m:%d %H:%M:%S")
+    new_date = datetime(year, month, day, hour, minute,
+                        second).strftime("%Y:%m:%d %H:%M:%S")
     exif_dict['0th'][piexif.ImageIFD.DateTime] = new_date
     exif_dict['Exif'][piexif.ExifIFD.DateTimeOriginal] = new_date
     exif_dict['Exif'][piexif.ExifIFD.DateTimeDigitized] = new_date
@@ -21,7 +22,8 @@ def exif_date_changer(filename, year, month, day):
 total_files = 0
 total_converted = 0
 total_skipped = 0
-alreadyPXL = 0
+
+# main function
 
 print(Fore.GREEN + "--BULK DATE UPDATER--" + Style.RESET_ALL)
 print('''the program gets a batch of whatsapp images and set their
@@ -61,7 +63,7 @@ for filename in files_list:
     month = int(filename[8:10])
     day = int(filename[10:12])
     try:
-        exif_date_changer(fullpath,year,month,day)
+        exif_date_changer(fullpath,year,month,day,13,0,0)
         total_converted+=1
     except Exception as e:
         total_skipped+=1
@@ -78,10 +80,7 @@ print(Fore.GREEN + "**created by meister - 21/8/2023**" + Style.RESET_ALL)
 print()
 print()
 
-# filename = r'C:\Users\Omer\Desktop\444.jpg'
-# C:\Users\Omer\Desktop\WAIMG
+# data which used for tests:
 # C:\Users\Omer\Desktop\test2
-# IMG-20130325-WA0003
-# IMG-20130611-WA0005
 # IMG-20130611-WA0003
 # IMG-20220610-WA0002
