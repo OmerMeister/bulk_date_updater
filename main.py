@@ -3,6 +3,10 @@ import piexif
 from datetime import datetime
 from colorama import Fore, Back, Style
 
+# Note: The script just changes some time taken values, not the filename. 
+#       if multiple pictures has the same date in their name, they both 
+#       will have 13:00:00 in their hour
+
 # auxilary functions
 
 # the function gets date and time parameters and create from them a datetime object
